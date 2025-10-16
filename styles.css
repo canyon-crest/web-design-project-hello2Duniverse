@@ -3,6 +3,13 @@ body{
     color: white;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
+#container{
+    width: 800px;
+    margin: 20px auto;
+    padding: 30px;
+    border-left: 5px solid white;
+    border-right: 5px solid white;
+}
 h1{
     background-color: rgb(124, 37, 124);
     border: 3px solid whitesmoke;
@@ -57,6 +64,7 @@ a:hover{
 #pic2{
     width: 200px;
     float: right;
+    margin-left: 20px;
 }
 
 /* Class Rule */
