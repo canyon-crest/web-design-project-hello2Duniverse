@@ -35,10 +35,10 @@ p{
 }
 
 img{
-    width: 150px;
+    width: 300px;
     border: 3px solid white;
     float: left;
-     margin-right: 20px;
+    margin-right: 20px;
 }
 
 /* Pseudo Selectors */
@@ -54,3 +54,16 @@ a:hover{
 }
 
 /* ID RULES*/
+#pic2{
+    width: 200px;
+    float: right;
+}
+
+/* Class Rule */
+.highlight{
+    background-color: yellow;
+    color: black;
+    padding: 2px;
+    border-radius: 2px;
+    font-weight: bold;
+}
