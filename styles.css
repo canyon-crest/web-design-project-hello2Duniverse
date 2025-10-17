@@ -10,6 +10,7 @@ body{
     border-left: 5px solid white;
     border-right: 5px solid white;
 }
+
 h1{
     background-color: rgb(124, 37, 124);
     border: 3px solid whitesmoke;
@@ -75,3 +76,29 @@ a:hover{
     border-radius: 2px;
     font-weight: bold;
 }
+
+#sidebar{
+    background-color: rgb(124, 37, 124);
+    width: 200px;
+    line-height: 2.25em;
+    border: 2px solid white;
+    float: right;
+    margin: 150px;
+    margin-top: 70px;
+}
+
+#sidebar h3{
+    border: ;
+    text-aligh: ;
+    padding: ;
+    margin: ;
+    margin-top: ;
+    background-color: ;
+    border: ;
+}
+
+li{
+    font-style:italic;
+}
+
+@media
