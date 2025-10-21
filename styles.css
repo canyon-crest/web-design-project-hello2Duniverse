@@ -61,6 +61,20 @@ body{
     font-family: 'Courier New', Courier, monospace;
     text-align: center; /* fallback for older browsers */
     overflow: hidden;
+    /* soft white glow for the heading container (luminous layers are white) */
+    box-shadow: 0 10px 22px rgba(0,0,0,0.42), 0 0 30px rgba(255,255,255,0.10);
+    text-shadow: 0 0 18px rgba(255,255,255,0.16);
+}
+
+/* Ensure h1 and h2 also use soft white glows to match h3 and images */
+h1, .headtitle{
+    /* luminous white glow (keeps existing background/border intact) */
+    box-shadow: 0 10px 22px rgba(0,0,0,0.42), 0 0 30px rgba(255,255,255,0.10);
+    text-shadow: 0 0 18px rgba(255,255,255,0.16);
+}
+
+h2, .typewriter{
+    text-shadow: 0 0 12px rgba(255,255,255,0.14);
 }
 
 /* each visible character is wrapped in .letter; use CSS variable --i to stagger */
@@ -72,6 +86,11 @@ body{
     animation: wave 1.8s ease-in-out infinite;
     /* stagger by 0.2s per letter using the custom property --i */
     animation-delay: calc(var(--i) * 0.2s);
+}
+
+/* Make each animated letter glow white to match the container glow */
+.headtitle .letter{
+    text-shadow: 0 0 12px rgba(255,255,255,0.18);
 }
 
 /* make spaces occupy width but not visually move too much */
@@ -99,6 +118,11 @@ h2{
     /* animate width in steps to mimic typing; repeat infinitely and pause at end */
     animation: typing 4.5s steps(31, end) 0.5s infinite;
     position: relative;
+}
+
+/* Give the typewriter heading a subtle white glow */
+.typewriter{
+    text-shadow: 0 0 12px rgba(255,255,255,0.14);
 }
 
 .typewriter::after{
@@ -165,6 +189,21 @@ img{
     object-fit: cover;
 }
 
+/* Soft 3D glow for all images */
+img{
+    /* preserve earlier rules but add 3D glow (white luminous layer) */
+    transition: transform 320ms ease, box-shadow 320ms ease, filter 320ms ease;
+    /* depth shadow + white glow */
+    box-shadow: 0 12px 24px rgba(0,0,0,0.45), 0 0 30px rgba(255,255,255,0.14);
+    filter: drop-shadow(0 8px 16px rgba(0,0,0,0.35));
+    border-radius: 6px;
+}
+
+img:hover{
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 0 22px 44px rgba(0,0,0,0.55), 0 0 46px rgba(255,255,255,0.18);
+}
+
 /* Pseudo Selectors */
 
 a:link{
@@ -202,6 +241,8 @@ a:hover{
     width: 200px;
     line-height: 2.25em;
     border: 2px solid white;
+    /* add prominent 3D glow to the whole sidebar (moves glow from its h3) */
+    box-shadow: 0 24px 60px rgba(0,0,0,0.55), 0 0 72px rgba(255,255,255,0.26);
     /* float the sidebar so it sits to the right of the main content
        and will align vertically with the block that appears beside it */
     float: right;
@@ -222,18 +263,31 @@ a:hover{
     color: white;
     padding: 10px;
     border-radius: 6px;
+    /* remove standalone 3D glow from this h3 so the whole sidebar handles the effect */
+    box-shadow: none;
+    text-shadow: none;
 }
 
-li{
-    font-style:italic;
+h3{
+    border-left: 20px groove white;
+    padding-left: 15px;
+    border-radius: 20px;
+    border-bottom: 2px solid;
+    width: 150px;
+    background-color: rgb(124, 37, 124);
+    /* soft 3D text and box glow (luminous layers are white) */
+    color: white;
+    text-shadow: 0 0 14px rgba(255,255,255,0.20);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.45), 0 0 24px rgba(255,255,255,0.12);
+    transition: transform 220ms ease, box-shadow 220ms ease, text-shadow 220ms ease;
 }
 
-@media (max-width: 1200px) {
-    #container{
-        background-color: rgb(13, 13, 82);
-        width: 800px;
-    }
+h3:hover{
+    transform: translateY(-4px);
+    box-shadow: 0 18px 36px rgba(0,0,0,0.55), 0 0 36px rgba(255,255,255,0.20);
+    text-shadow: 0 0 16px rgba(255,255,255,0.25);
 }
+
 
 @media (max-width: 992px){
     #container{
