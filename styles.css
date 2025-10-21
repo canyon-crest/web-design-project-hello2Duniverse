@@ -1,7 +1,40 @@
 body{
-    background-color: midnightblue;
-    color: white;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+        /* fallback color for very old browsers */
+        background-color: midnightblue;
+        /* animated linear gradient: midnight blue -> ultramarine for a wider range */
+        background: linear-gradient(120deg, midnightblue 0%, #071033 25%, #0b234f 60%, #3F00FF 100%);
+        /* larger background-size so the gradient covers more area and appears more "widespread" */
+        background-size: 600% 600%;
+        /* slower animation for a smoother, more gradual transition */
+        animation: gradientShift 8s ease infinite;
+        color: white;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+/* Wave keyframes: rotate/translate letters up/down for continuous wave */
+@keyframes wave {
+    0%   { transform: translateY(0) rotate(0deg); }
+    25%  { transform: translateY(-10px) rotate(-6deg); }
+    50%  { transform: translateY(0) rotate(0deg); }
+    75%  { transform: translateY(10px) rotate(6deg); }
+    100% { transform: translateY(0) rotate(0deg); }
+}
+
+/* Improve accessibility: reduce motion for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce){
+    .headtitle .letter,
+    .headtitle .space{
+        animation: none;
+        transform: none;
+    }
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 0%; }
+    25% { background-position: 50% 25%; }
+    50% { background-position: 100% 50%; }
+    75% { background-position: 50% 75%; }
+    100% { background-position: 0% 100%; }
 }
 #container{
     width: 1050px;
@@ -9,23 +42,97 @@ body{
     padding: 30px;
     border-left: 5px solid white;
     border-right: 5px solid white;
+    /* establish positioning context so the sidebar can be absolutely positioned */
+    position: relative;
 }
 
-h1{
+/* Headtitle styling (animated wavy letters) */
+.headtitle{
+    display: flex;
+    justify-content: center; /* center letters horizontally */
+    align-items: center;
+    gap: 4px; /* small gap between letters */
     background-color: rgb(124, 37, 124);
     border: 3px solid whitesmoke;
     border-radius: 13px;
     padding: 20px;
-    text-align: center;
     width: 60%;
     margin: 20px auto;
     font-family: 'Courier New', Courier, monospace;
+    text-align: center; /* fallback for older browsers */
+    overflow: hidden;
+}
+
+/* each visible character is wrapped in .letter; use CSS variable --i to stagger */
+.headtitle .letter,
+.headtitle .space{
+    display: inline-block;
+    transform-origin: center bottom;
+    /* animate transform to create wave effect (slower) */
+    animation: wave 1.8s ease-in-out infinite;
+    /* stagger by 0.2s per letter using the custom property --i */
+    animation-delay: calc(var(--i) * 0.2s);
+}
+
+/* make spaces occupy width but not visually move too much */
+.headtitle .space{
+    width: 0.45em;
 }
 
 h2{
     font-size: 1.3em;
     text-align: center;
     font-style: italic;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+/* Typewriter effect for h2 (pure CSS)
+   - Add the class `typewriter` to the h2 in the HTML to enable.
+   - Uses `typing` (width animation with steps) and `blink` for the cursor.
+   - Adjust `steps()` count if you change the h2 text length. */
+.typewriter{
+    display: block; /* center as a block element */
+    margin: 0 auto; /* horizontally center */
+    overflow: hidden;           /* hide the overflowing text while typing */
+    white-space: nowrap;        /* keep the text on one line */
+    box-sizing: border-box;
+    /* animate width in steps to mimic typing; repeat infinitely and pause at end */
+    animation: typing 4.5s steps(31, end) 0.5s infinite;
+    position: relative;
+}
+
+.typewriter::after{
+    /* cursor block; blink animation alternates opacity between 1 and 0 */
+    content: '';
+    display: inline-block;
+    width: 0.12em;
+    height: 1em;
+    background: white;
+    margin-left: 0.12em;
+    vertical-align: bottom;
+    animation: blink 0.9s steps(1, start) infinite;
+}
+
+@keyframes typing{
+    /* 0% - 70% : typing from 0 -> full width
+       70% - 100% : hold full width (pause) so the text is readable before restarting */
+    0%   { width: 0; }
+    70%  { width: 31ch; }
+    100% { width: 31ch; }
+}
+
+@keyframes blink{
+    0%   { opacity: 1; }
+    50%  { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+/* Respect user preference for reduced motion */
+@media (prefers-reduced-motion: reduce){
+    .typewriter,
+    .typewriter::after{
+        animation: none !important;
+    }
 }
 
 h3{
@@ -40,13 +147,22 @@ p{
     line-height: 2em;
     padding: 20px;
     border: 2px solid rgb(124, 37, 124);
+    /* contain floated images so the purple border wraps them */
+    overflow: auto;
+    box-sizing: border-box;
 }
 
 img{
-    width: 300px;
+    /* Be responsive: never overflow its container */
+    max-width: 45%;
+    width: auto;
+    height: auto;
     border: 3px solid white;
     float: left;
     margin-right: 20px;
+    box-sizing: border-box;
+    /* keep aspect and crop nicely if needed */
+    object-fit: cover;
 }
 
 /* Pseudo Selectors */
@@ -63,9 +179,13 @@ a:hover{
 
 /* ID RULES*/
 #pic2{
-    width: 200px;
+    /* make the right-floating image responsive too */
+    max-width: 40%;
+    width: auto;
+    height: auto;
     float: right;
     margin-left: 20px;
+    box-sizing: border-box;
 }
 
 /* Class Rule */
@@ -82,17 +202,26 @@ a:hover{
     width: 200px;
     line-height: 2.25em;
     border: 2px solid white;
+    /* float the sidebar so it sits to the right of the main content
+       and will align vertically with the block that appears beside it */
     float: right;
-    margin: 50px;
-    margin-top: 70px;
+    margin: 50px 0 20px 20px; /* gap to the left so main content doesn't touch it */
+}
+
+/* Ensure the second paragraph leaves room for the sidebar on larger screens */
+@media (min-width: 769px) {
+    /* Reserve space on wider screens so #p2 doesn't flow under the floated sidebar */
+    #p2{
+        margin-right: 260px; /* 200px sidebar + ~60px gap/padding */
+    }
 }
 
 #sidebar h3{
-    border: 5px;
-    text-align: 5px;
-    margin: 5px;
+    margin: 5px 10px;
     background-color: midnightblue;
-    border 5px: 
+    color: white;
+    padding: 10px;
+    border-radius: 6px;
 }
 
 li{
@@ -125,10 +254,38 @@ li{
     #sidebar{
         display: none;
     }
-    h1{
+    /* For small screens treat the animated heading as a normal heading
+       by restoring a simple, original-like appearance and disabling
+       the per-letter animation so the markup (spans) doesn't interfere. */
+    h1, .headtitle{
         border: none;
         background: none;
         width: 90%;
+        display: block;
+        padding: 10px 0;
+        margin: 10px auto;
+        text-align: center;
+    }
+
+    /* Make the whole page background solid #372667 on small screens and
+       stop the animated gradient to reduce motion and visual noise. */
+    body{
+        background: #372667 !important;
+        animation: none !important;
+        background-color: #372667 !important;
+    }
+
+    /* Disable per-letter animation and render letters inline like plain text */
+    .headtitle .letter,
+    .headtitle .space{
+        display: inline;
+        animation: none !important;
+        transform: none !important;
+    }
+    /* Turn off typewriter effect on small screens */
+    .typewriter,
+    .typewriter::after{
+        animation: none !important;
     }
     h2{
         border: none;
@@ -141,6 +298,12 @@ li{
         width: 90%;
     }
     img, #pic2{
+        /* make images small on narrow screens */
         width: 100px;
+        max-width: 100px;
+        height: auto;
+        float: none; /* stack images above text on small screens */
+        display: block;
+        margin: 0 auto 20px;
     }
 }
