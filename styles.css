@@ -1,17 +1,12 @@
 body{
-        /* fallback color for very old browsers */
         background-color: midnightblue;
-        /* animated linear gradient: midnight blue -> ultramarine for a wider range */
         background: linear-gradient(120deg, midnightblue 0%, #071033 25%, #0b234f 60%, #3F00FF 100%);
-        /* larger background-size so the gradient covers more area and appears more "widespread" */
         background-size: 600% 600%;
-        /* slower animation for a smoother, more gradual transition */
         animation: gradientShift 8s ease infinite;
         color: white;
         font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-/* Wave keyframes: rotate/translate letters up/down for continuous wave */
 @keyframes wave {
     0%   { transform: translateY(0) rotate(0deg); }
     25%  { transform: translateY(-10px) rotate(-6deg); }
@@ -20,7 +15,6 @@ body{
     100% { transform: translateY(0) rotate(0deg); }
 }
 
-/* Improve accessibility: reduce motion for users who prefer reduced motion */
 @media (prefers-reduced-motion: reduce){
     .headtitle .letter,
     .headtitle .space{
@@ -42,16 +36,14 @@ body{
     padding: 30px;
     border-left: 5px solid white;
     border-right: 5px solid white;
-    /* establish positioning context so the sidebar can be absolutely positioned */
     position: relative;
 }
 
-/* Headtitle styling (animated wavy letters) */
 .headtitle{
     display: flex;
-    justify-content: center; /* center letters horizontally */
+    justify-content: center;
     align-items: center;
-    gap: 4px; /* small gap between letters */
+    gap: 4px; 
     background-color: rgb(124, 37, 124);
     border: 3px solid whitesmoke;
     border-radius: 13px;
@@ -59,16 +51,13 @@ body{
     width: 60%;
     margin: 20px auto;
     font-family: 'Courier New', Courier, monospace;
-    text-align: center; /* fallback for older browsers */
+    text-align: center; 
     overflow: hidden;
-    /* soft white glow for the heading container (luminous layers are white) */
     box-shadow: 0 10px 22px rgba(0,0,0,0.42), 0 0 30px rgba(255,255,255,0.10);
     text-shadow: 0 0 18px rgba(255,255,255,0.16);
 }
 
-/* Ensure h1 and h2 also use soft white glows to match h3 and images */
 h1, .headtitle{
-    /* luminous white glow (keeps existing background/border intact) */
     box-shadow: 0 10px 22px rgba(0,0,0,0.42), 0 0 30px rgba(255,255,255,0.10);
     text-shadow: 0 0 18px rgba(255,255,255,0.16);
 }
@@ -77,23 +66,18 @@ h2, .typewriter{
     text-shadow: 0 0 12px rgba(255,255,255,0.14);
 }
 
-/* each visible character is wrapped in .letter; use CSS variable --i to stagger */
 .headtitle .letter,
 .headtitle .space{
     display: inline-block;
     transform-origin: center bottom;
-    /* animate transform to create wave effect (slower) */
     animation: wave 1.8s ease-in-out infinite;
-    /* stagger by 0.2s per letter using the custom property --i */
     animation-delay: calc(var(--i) * 0.2s);
 }
 
-/* Make each animated letter glow white to match the container glow */
 .headtitle .letter{
     text-shadow: 0 0 12px rgba(255,255,255,0.18);
 }
 
-/* make spaces occupy width but not visually move too much */
 .headtitle .space{
     width: 0.45em;
 }
@@ -105,28 +89,22 @@ h2{
     font-family: 'Courier New', Courier, monospace;
 }
 
-/* Typewriter effect for h2 (pure CSS)
-   - Add the class `typewriter` to the h2 in the HTML to enable.
-   - Uses `typing` (width animation with steps) and `blink` for the cursor.
-   - Adjust `steps()` count if you change the h2 text length. */
+
 .typewriter{
-    display: block; /* center as a block element */
-    margin: 0 auto; /* horizontally center */
-    overflow: hidden;           /* hide the overflowing text while typing */
-    white-space: nowrap;        /* keep the text on one line */
+    display: block; 
+    margin: 0 auto; 
+    overflow: hidden;          
+    white-space: nowrap;      
     box-sizing: border-box;
-    /* animate width in steps to mimic typing; repeat infinitely and pause at end */
     animation: typing 4.5s steps(31, end) 0.5s infinite;
     position: relative;
 }
 
-/* Give the typewriter heading a subtle white glow */
 .typewriter{
     text-shadow: 0 0 12px rgba(255,255,255,0.14);
 }
 
 .typewriter::after{
-    /* cursor block; blink animation alternates opacity between 1 and 0 */
     content: '';
     display: inline-block;
     width: 0.12em;
@@ -138,8 +116,6 @@ h2{
 }
 
 @keyframes typing{
-    /* 0% - 70% : typing from 0 -> full width
-       70% - 100% : hold full width (pause) so the text is readable before restarting */
     0%   { width: 0; }
     70%  { width: 31ch; }
     100% { width: 31ch; }
@@ -151,7 +127,6 @@ h2{
     100% { opacity: 1; }
 }
 
-/* Respect user preference for reduced motion */
 @media (prefers-reduced-motion: reduce){
     .typewriter,
     .typewriter::after{
@@ -171,13 +146,11 @@ p{
     line-height: 2em;
     padding: 20px;
     border: 2px solid rgb(124, 37, 124);
-    /* contain floated images so the purple border wraps them */
     overflow: auto;
     box-sizing: border-box;
 }
 
 img{
-    /* Be responsive: never overflow its container */
     max-width: 45%;
     width: auto;
     height: auto;
@@ -185,15 +158,11 @@ img{
     float: left;
     margin-right: 20px;
     box-sizing: border-box;
-    /* keep aspect and crop nicely if needed */
     object-fit: cover;
 }
 
-/* Soft 3D glow for all images */
 img{
-    /* preserve earlier rules but add 3D glow (white luminous layer) */
     transition: transform 320ms ease, box-shadow 320ms ease, filter 320ms ease;
-    /* depth shadow + white glow */
     box-shadow: 0 12px 24px rgba(0,0,0,0.45), 0 0 30px rgba(255,255,255,0.14);
     filter: drop-shadow(0 8px 16px rgba(0,0,0,0.35));
     border-radius: 6px;
@@ -204,7 +173,6 @@ img:hover{
     box-shadow: 0 22px 44px rgba(0,0,0,0.55), 0 0 46px rgba(255,255,255,0.18);
 }
 
-/* Pseudo Selectors */
 
 a:link{
     color: red;
@@ -218,7 +186,6 @@ a:hover{
 
 /* ID RULES*/
 #pic2{
-    /* make the right-floating image responsive too */
     max-width: 40%;
     width: auto;
     height: auto;
@@ -241,20 +208,9 @@ a:hover{
     width: 200px;
     line-height: 2.25em;
     border: 2px solid white;
-    /* add prominent 3D glow to the whole sidebar (moves glow from its h3) */
     box-shadow: 0 24px 60px rgba(0,0,0,0.55), 0 0 72px rgba(255,255,255,0.26);
-    /* float the sidebar so it sits to the right of the main content
-       and will align vertically with the block that appears beside it */
     float: right;
-    margin: 50px 0 20px 20px; /* gap to the left so main content doesn't touch it */
-}
-
-/* Ensure the second paragraph leaves room for the sidebar on larger screens */
-@media (min-width: 769px) {
-    /* Reserve space on wider screens so #p2 doesn't flow under the floated sidebar */
-    #p2{
-        margin-right: 260px; /* 200px sidebar + ~60px gap/padding */
-    }
+    margin: 50px 0 20px 20px; 
 }
 
 #sidebar h3{
@@ -263,7 +219,6 @@ a:hover{
     color: white;
     padding: 10px;
     border-radius: 6px;
-    /* remove standalone 3D glow from this h3 so the whole sidebar handles the effect */
     box-shadow: none;
     text-shadow: none;
 }
@@ -275,7 +230,6 @@ h3{
     border-bottom: 2px solid;
     width: 150px;
     background-color: rgb(124, 37, 124);
-    /* soft 3D text and box glow (luminous layers are white) */
     color: white;
     text-shadow: 0 0 14px rgba(255,255,255,0.20);
     box-shadow: 0 8px 20px rgba(0,0,0,0.45), 0 0 24px rgba(255,255,255,0.12);
@@ -289,6 +243,12 @@ h3:hover{
 }
 
 
+@media (max-width: 1200px) {
+    #container{
+        background-color: rgb(13, 13, 82);
+        width: 800px;
+    }
+}
 @media (max-width: 992px){
     #container{
         background-color:rgb(55, 38, 103);
@@ -308,9 +268,6 @@ h3:hover{
     #sidebar{
         display: none;
     }
-    /* For small screens treat the animated heading as a normal heading
-       by restoring a simple, original-like appearance and disabling
-       the per-letter animation so the markup (spans) doesn't interfere. */
     h1, .headtitle{
         border: none;
         background: none;
@@ -321,22 +278,18 @@ h3:hover{
         text-align: center;
     }
 
-    /* Make the whole page background solid #372667 on small screens and
-       stop the animated gradient to reduce motion and visual noise. */
     body{
         background: #372667 !important;
         animation: none !important;
         background-color: #372667 !important;
     }
 
-    /* Disable per-letter animation and render letters inline like plain text */
     .headtitle .letter,
     .headtitle .space{
         display: inline;
         animation: none !important;
         transform: none !important;
     }
-    /* Turn off typewriter effect on small screens */
     .typewriter,
     .typewriter::after{
         animation: none !important;
@@ -352,12 +305,10 @@ h3:hover{
         width: 90%;
     }
     img, #pic2{
-        /* make images small on narrow screens */
         width: 100px;
         max-width: 100px;
         height: auto;
-        float: none; /* stack images above text on small screens */
+        float: none; 
         display: block;
         margin: 0 auto 20px;
     }
-}
